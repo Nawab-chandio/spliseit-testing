@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import { Grid } from '@mui/material';
+import React, { useState } from 'react';
+import FullFeaturedCrudGrid from './Table';
+import { ThemeProvider } from '@emotion/react';
+import theme from './Theme';
+import CustomDataGrid from './hp';
+import CustomColumn from './CustomColumn';
+import ReportTo from './ReportTo';
 
-function App() {
+const App =() =>{
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+    <FullFeaturedCrudGrid />
+    <ReportTo />
+    <CustomColumn />
+  </ThemeProvider>
   );
-}
-
+  }
 export default App;

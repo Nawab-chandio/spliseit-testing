@@ -1,0 +1,67 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: "Lexend";
+}
+
+.customStyle {
+  color: #000000;
+  font-family: "Lexend", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.buttonStyle {
+  font-family: "Lexend", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  /* height: 20px;  */
+  padding: '2px 8px';
+  border: 11px solid red
+}
+
+.nameStyle {
+  font-family: "Lexend", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  margin-right: 11px; 
+  height: 18px; 
+}
+
+.roleStyle {
+  font-family: "Lexend", sans-serif;
+  font-size: 9px;
+  font-weight: 300;
+  margin-right: 11px; 
+  height: 18px; 
+}
+
+#field-options {
+  display: flex;
+  flex-direction: column;
+  align-items: start; 
+}
+
+#field-options p {
+  display: flex;
+  align-items: center; 
+  margin: 10px 0; 
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#field-options p svg {
+  margin-right: 5px; 
+}
+
+
+:global .summaryInfotooltip {
+  /* width: 250px; */
+
+  /* Set the border color to a specific color (e.g., blue) */
+  border: 1px solid blue;
+
+  /* Other styles can be added here */
+}
+
+
