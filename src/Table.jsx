@@ -13,12 +13,14 @@ import ControlPointIcon from "@mui/icons-material/ControlPoint";
 // import Dialoge from "./dialog";
 import { useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
-import { grey } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 import CustomColumn from "./CustomColumn";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import "./styling.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import BusinessIcon from '@mui/icons-material/Business';
 
 import {
   GridRowModes,
@@ -27,15 +29,16 @@ import {
   GridActionsCellItem,
 } from "@mui/x-data-grid";
 import { randomId, randomArrayItem } from "@mui/x-data-grid-generator";
-import { Grid, MenuItem } from "@mui/material";
+import { Grid, InputAdornment, MenuItem } from "@mui/material";
 
-const depts = ["Market", "Finance", "Development"];
+const role = ["Manager", "Clerk", "IT Officer"];
+const Dept = ["Finnance", "Administration", "IT Dept"];
 
 const randomDept = () => {
-  return randomArrayItem(depts);
+  return randomArrayItem(Dept);
 };
 
-const Dept = ["Manager", "Clerk", "IT Officer"];
+
 
 const randomRole = () => {
   return randomArrayItem(Dept);
@@ -114,6 +117,7 @@ export default function FullFeaturedCrudGrid() {
   const [isAddingNewUser, setIsAddingNewUser] = React.useState(false);
   // const [isDialogOpen, setDialogOpen] = useState(false);
   const [isCustomColumnOpen, setIsCustomColumnOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   // const handleRowEditStop = (params, event) => {
   //   if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -144,6 +148,15 @@ export default function FullFeaturedCrudGrid() {
 
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleHover = () => {
+    alert('test')
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   const handleDeleteClick = (id) => () => {
@@ -179,7 +192,7 @@ export default function FullFeaturedCrudGrid() {
   // const handleControlPointClick = () => {
   //   setDialogOpen(true);
   // };
-  const options = ["Manager", "Clerk", "IT Officer", "t"];
+ 
 
   const columns = [
     {
@@ -191,7 +204,7 @@ export default function FullFeaturedCrudGrid() {
       justifyContent: "left",
       renderCell: (params) => (
         <div
-          className="customStyle"
+          className="customStyles"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -210,14 +223,20 @@ export default function FullFeaturedCrudGrid() {
       width: 180,
       align: "left",
       headerAlign: "left",
+      type: 'singleSelect',
       renderCell: (params) => (
-        <Grid container style={{border:"none", }}>
+        <Grid container style={{ border: "none" }}>
           {" "}
           <Autocomplete
             disablePortal
-            options={options}
-            value={params.value}
+            // options={[
+            //   `+ Add New Role`
+            // ,...role]}
+             options={Dept}
+            
+            // value={ params.value === "" ? `+ Add New Role`:params.value}
             fullWidth
+            popupIcon ={null}
             onChange={(event, newValue) => {
               console.log("New role", newValue);
             }}
@@ -233,30 +252,38 @@ export default function FullFeaturedCrudGrid() {
             renderInput={(params) => (
               <TextField
                 {...params}
-            
+                variant="standard"
                 sx={{
                   fontFamily: "Lexend",
                   fontSize: 12,
                   "& input:focus": {
                     color: "#6271EB",
-                    fontWeight: 600 // Set the text color to green
+                    fontWeight: 600, // Set the text color to green
                   },
                 }}
-                label={
-                  <span
-                    style={{
-                      fontFamily: "Lexend",
-                      fontSize: "14px",
-                      fontWeight: 400,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <ControlPointIcon style={{ fontSize: "15px" }} />
-                    Add Role
-                  </span>
-                }
+                InputProps={{...params.InputProps, 
+                  startAdornment: (
+                    <InputAdornment position="start" >
+                      <ControlPointIcon />
+                    </InputAdornment>
+                  ),
+                  disableUnderline: true}}
+                placeholder=" Add New Role"
+                // label={
+                //   <span
+                //     style={{
+                //       fontFamily: "Lexend",
+                //       fontSize: "14px",
+                //       fontWeight: 400,
+                //       display: "flex",
+                //       justifyContent: "center",
+                //       alignItems: "center",
+                //     }}
+                //   >
+                //     <ControlPointIcon style={{ fontSize: "15px" }} />
+                //     Add Role
+                //   </span>
+                // }
               />
             )}
           />
@@ -272,7 +299,7 @@ export default function FullFeaturedCrudGrid() {
       align: "left",
       headerAlign: "left",
       renderCell: () => (
-        <div className="customStyle">
+        <div >
           {Perms.map((permission, index) => (
             <span key={index} style={{ color: permission.color }}>
               <CircleIcon
@@ -295,8 +322,9 @@ export default function FullFeaturedCrudGrid() {
       width: 180,
       editable: true,
       renderCell: (params) => (
-        <span className="customStyle">{params.value}</span>
+        <span className="customStyles">{params.value}</span>
       ),
+      
     },
 
     {
@@ -305,17 +333,90 @@ export default function FullFeaturedCrudGrid() {
       width: 150,
       editable: true,
       renderCell: (params) => (
-        <span className="customStyle">{params.value}</span>
+        <span className="customStyles">{params.value}</span>
       ),
     },
     {
       field: "Dept",
       headerName: "Department",
-      width: 130,
-      editable: true,
+      width: 180,
       type: "singleSelect",
       renderCell: (params) => (
-        <span className="customStyle">{params.value}</span>
+        <Grid container >
+          {
+            console.log("prams", params.value)
+          }
+          {/* <ControlPointIcon/> */}
+          <Autocomplete
+            disablePortal
+            // options={[
+            //   `+ Department`
+            // ,...Dept]}
+
+             options={Dept}
+            
+            // value={ params.value === "" || !params.value ? `+ Department` :params.value}
+            value={params.value}
+
+            fullWidth
+            popupIcon ={null}
+            onChange={(event, newValue) => {
+              console.log("New Dept", newValue);
+            }}
+            listboxprops={{
+              sx: { fontsize: 10 },
+            }}
+            sx={{
+              "& .muiautocomplete-input, & .muiinputlabel-root": {
+                fontsize: 10,
+                border: "none"
+              },
+            }}
+            renderInput={(params) => (
+              <TextField
+              variant="standard"
+                {...params}
+                sx={{
+                  fontFamily: "Lexend",
+                  fontSize: 12,
+                  borderBottom: "none",
+                  "& input:focus": {
+                    color: "#6271EB",
+                    fontWeight: 600, // Set the text color to green
+                  },
+                }}
+                InputProps={{...params.InputProps, disableUnderline: true, startAdornment: (
+                  <InputAdornment position="start" style={{color: '#68BC45'}}>
+                    <BusinessIcon /> +
+                  </InputAdornment>
+                ),}}
+                placeholder={ `Department`}
+                // InputProps={{
+
+            
+                //   disableUnderline: true // remove the underline
+        
+                // }}
+                // label={
+                //   <span
+                //     style={{
+                //       fontFamily: "Lexend",
+                //       fontSize: "14px",
+                //       fontWeight: 400,
+                //       display: "flex",
+                //       justifyContent: "center",
+                //       alignItems: "center",
+                //     }}
+                //   >
+                //     <ControlPointIcon style={{ fontSize: "15px" }} />
+                //     Department
+                //   </span>
+                // }
+              />
+            )}
+           
+          />
+        </Grid>
       ),
       valueOptions: ["Market", "Finance", "Development"],
     },
@@ -326,7 +427,7 @@ export default function FullFeaturedCrudGrid() {
       align: "left",
       headerAlign: "left",
       headerName: (
-        <span onClick={() => handleCustomColumn()}>
+        <span onClick={handleHover}>
           <ControlPointIcon style={{ width: "15px", paddingTop: "25px" }} />
         </span>
       ),
@@ -397,51 +498,6 @@ export default function FullFeaturedCrudGrid() {
     <Grid container>
       <Grid item xs={2}></Grid>
       <Grid item xs={9} style={{ marginTop: "1rem" }}>
-        <Autocomplete
-          size="small"
-          //  disablePortal
-          options={options}
-          // value={params.value}
-          fullWidth
-          onChange={(event, newValue) => {
-            // Handle the selected value here, e.g., update the state or row data
-            console.log("New role", newValue);
-          }}
-          // listboxprops={{
-          //   sx: { fontsize: 12 },
-          // }}
-          // sx={{
-          //   '& .muiautocomplete-input, & .muiinputlabel-root': {
-          //     fontsize: 12,
-          //   },
-          // }}
-          sx={{
-            fontFamily: "Lexend",
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              style={{
-                fontFamily: "Lexend",
-              }}
-              label={
-                <span
-                  style={{
-                    fontFamily: "Lexend",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <ControlPointIcon style={{ fontSize: "15px" }} />
-                  Add Role
-                </span>
-              }
-            />
-          )}
-        />
         <Card
           style={{
             boxShadow: "-5px 0px 0px #68BC45",
@@ -469,7 +525,7 @@ export default function FullFeaturedCrudGrid() {
                   Users
                 </Typography>
               </Grid>
-              {isCustomColumnOpen && <CustomColumn />}
+              {isHovered && <CustomColumn />}
               <Grid
                 item
                 xs={6.5}
@@ -587,49 +643,61 @@ export default function FullFeaturedCrudGrid() {
               </Grid>
             </Grid>
 
-            <Box
+            {/* <Box
+              // sx={{
+              //   height: "calc(100% - 48px)",
+              //   width: "100%",
+              // }}
+              height={"500px"}
+              paddingBottom={'10px'}
+              paddingTop={}
+            > */}
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              style={styleRow}
+              getRowSpacing={getRowSpacing}
               sx={{
-                height: "calc(100% - 48px)",
-                width: "100%",
+                [`& .${gridClasses.row}`]: {
+                  bgcolor: (theme) =>
+                    theme.palette.mode === "light" ? grey[200] : grey[900],
+                  borderRadius: "4px",
+                  border: "1px solid #E7EAEC",
+                  backgroundColor: "white",
+                  "&:not(:last-child)": {
+                    marginBottom: "10px",
+                  },
+              
+                },
+
+                "& .MuiDataGrid-cell:focus": {
+                  outline: "none",
+                  color: '#6271EB',
+                  fontSize:'14px',
+                  fontFamily: 'Lexend',
+                  fontWeight: 600
+
+                },
+                "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
+                  borderBottom: "none",
+                },
+                
               }}
-            >
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                style={styleRow}
-                getRowSpacing={getRowSpacing}
-                sx={{
-                  [`& .${gridClasses.row}`]: {
-                    bgcolor: (theme) =>
-                      theme.palette.mode === "light" ? grey[200] : grey[900],
-                    borderRadius: "4px",
-                    border: "1px solid #E7EAEC",
-                    backgroundColor: "white",
-                    "&:not(:last-child)": {
-                      marginBottom: "10px",
-                    },
-                  },
-                  "& .MuiDataGrid-cell:focus": {
-                    outline: "none",
-                  },
-                  "& .MuiDataGrid-columnsContainer, .MuiDataGrid-cell": {
-                    borderBottom: "1px",
-                  },
-                }}
-                editMode="row"
-                rowSpacingType={rowSpacingType}
-                rowHeight={rowHeight}
-                rowModesModel={rowModesModel}
-                rowBuffer={true}
-                onRowModesModelChange={handleRowModesModelChange}
-                processRowUpdate={processRowUpdate}
-                slots={{
-                  toolbar: EditToolbar,
-                }}
-                slotProps={{
-                  toolbar: { setRows, setRowModesModel },
-                }}
-              />
+              editMode="row"
+              rowSpacingType={rowSpacingType}
+              rowHeight={rowHeight}
+              rowModesModel={rowModesModel}
+              rowBuffer={true}
+              onRowModesModelChange={handleRowModesModelChange}
+              processRowUpdate={processRowUpdate}
+              slots={{
+                toolbar: EditToolbar,
+              }}
+              slotProps={{
+                toolbar: { setRows, setRowModesModel },
+              }}
+            />
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Button
                 className="buttonStyle"
                 size="small"
@@ -644,7 +712,21 @@ export default function FullFeaturedCrudGrid() {
               >
                 + New User
               </Button>
-            </Box>
+              <Button
+                size="small"
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#666666",
+                  textTransform: "capitalize",
+                  border: "1px solid #E7EAEC",
+                  padding: "0px 10px",
+                }}
+              >
+                show More <ArrowDownwardIcon style={{ fontSize: "14px" }} />
+              </Button>
+            </div>
+
+            {/* </Box> */}
           </CardContent>
         </Card>
       </Grid>

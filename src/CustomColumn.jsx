@@ -13,11 +13,6 @@ import TitleOutlinedIcon from '@mui/icons-material/TitleOutlined';
 const handleText = (param) => {
   console.log(param)
 
-  // <Modal title="Basic Modal">
-  //     <p>Some contents...</p>
-  //     <p>Some contents...</p>
-  //     <p>Some contents...</p>
-  //   </Modal>
 };
 
 
@@ -37,10 +32,7 @@ const content = (
 
 const CustomColumn = () => (
   <Space wrap>
-
-    <Popover content={content} title={<span style={{ color: "#6271EB" }}>New Column</span>} trigger="click">
-      <Button>Click me</Button>
-    </Popover>
+    <Popover content={content} title={<span style={{ color: "#6271EB" }}>New Column</span>} trigger="hover"></Popover>
   </Space>
 );
 

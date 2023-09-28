@@ -54,14 +54,18 @@
   margin-right: 5px; 
 }
 
-
-:global .summaryInfotooltip {
-  /* width: 250px; */
-
-  /* Set the border color to a specific color (e.g., blue) */
-  border: 1px solid blue;
-
-  /* Other styles can be added here */
+.MuiDataGrid-footerContainer.MuiDataGrid-withBorderColor.css-wop1k0-MuiDataGrid-footerContainer {
+  display: none !important;
 }
+
+.MuiDataGrid-columnHeadersInner .MuiDataGrid-columnHeadersInner--scrollable .css-gl260s-MuiDataGrid-columnHeadersInner{
+  display: none !important;
+}
+
+.MuiAutocomplete-root{
+  border: none !important; 
+  outline: none !important;
+}
+
 
 
