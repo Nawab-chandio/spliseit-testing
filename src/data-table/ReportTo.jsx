@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./index.css";
+import "../index.css";
 import {Grid, Radio, Input } from "@mui/material";
 import { Button, Popover, Space, Modal } from "antd";
 import {SearchOutlined,} from "@ant-design/icons";
@@ -78,10 +78,12 @@ const ReportTo = () => {
               }}
             >
               <Radio
-                checked={selectedPerson === person.name}
-                onChange={() => setSelectedPerson(person.name)}
-                value={person.name}
-              />
+  checked={selectedPerson === person.name}
+  onChange={() => setSelectedPerson(person.name)}
+  value={person.name}
+  className="customRadio"
+/>
+
             </Grid>
           </Grid>
         ))}
@@ -112,15 +114,16 @@ const ReportTo = () => {
     </div>
   );
 
+  
+
   return (
     <Space wrap>
       <Popover
         content={content}
         title={<span style={{ color: "#6271EB" }}>Add Report to</span>}
         trigger="click"
-        closeIcon={<CloseIcon />}
       >
-        <Button>Report to</Button>
+        <Avatar>Report to</Avatar>
       </Popover>
     </Space>
   );

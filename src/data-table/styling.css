@@ -20,6 +20,7 @@
   border: 11px solid red
 }
 
+
 .nameStyle {
   font-family: "Lexend", sans-serif;
   font-size: 11px;
@@ -62,10 +63,60 @@
   display: none !important;
 }
 
-.MuiAutocomplete-root{
+.MuiAutocomplete-root  .css-188a24p-MuiInputBase-root-MuiInput-root{
   border: none !important; 
   outline: none !important;
+  font-weight: 500;
+}
+
+
+:where(.css-dev-only-do-not-override-1vr7spz).ant-popover {
+  border-radius: 8px;
+  border: 0.1rem solid #6271EB !important;
+  box-shadow: 0 2px 8px 0 #6271eb, 0 1px 2px -4px #6271eb75, 0 9px 28px 8px #6271eb03
+}
+
+
+.css-w7ghnq-MuiInputBase-root-MuiInput-root:before,
+.css-w7ghnq-MuiInputBase-root-MuiInput-root:after {
+  border-bottom: none !important;
 }
 
 
 
+.custom-ok-button {
+  background-color: #8996f4; 
+  color: white;
+  border: none;
+}
+
+.custom-cancel-button {
+  background-color: #aeacb0; 
+  color: white;
+  border: none;
+}
+
+.custom-ok-button:hover {
+  background-color: #8996f4 !important; 
+}
+
+.custom-cancel-button:hover {
+  background-color: #aeacb0 !important; 
+  color: #fff !important;
+}
+
+.css-1c1jkmn-MuiDataGrid-root .MuiDataGrid-withBorderColor{
+  border: none !important;
+}
+
+.css-1ngi5tx-MuiDataGrid-root .MuiDataGrid-withBorderColor{
+  border-bottom: none;
+}
+
+.MuiDataGrid-virtualScrollerRenderZone .css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone{
+  min-height: "300px" !important;
+}
+
+.css-axafay-MuiDataGrid-virtualScroller {
+  position: static !important;
+}
