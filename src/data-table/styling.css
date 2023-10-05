@@ -118,5 +118,43 @@
 }
 
 .css-axafay-MuiDataGrid-virtualScroller {
-  position: static !important;
+  position: relative !important;
+}
+
+.css-1c1jkmn-MuiDataGrid-root .MuiDataGrid-cell.MuiDataGrid-cell--editing:focus-within{
+  outline: solid #fff !important;
+  font-size: '22px';
+}
+
+.css-1o8s50a-MuiInputBase-root-MuiDataGrid-editInputCell input{
+  color: #6271EB;
+  font-weight: 600;
+  font-size: 11px;
+  font-family: 'lexend';
+}
+
+.MuiInputBase-root .MuiOutlinedInput-root .MuiInputBase-colorPrimary .MuiInputBase-formControl .css-syuq4g-MuiInputBase-root-MuiOutlinedInput-root{
+  outline: #8996f4;
+}
+
+.MuiDataGrid-cell--withRenderer .MuiDataGrid-cell .MuiDataGrid-cell--textLeft .MuiDataGrid-cell--editable .MuiDataGrid-withBorderColor{
+  border: #e11111;
+}
+
+.css-1c1jkmn-MuiDataGrid-root .MuiDataGrid-row:not(.MuiDataGrid-row--dynamicHeight)>.MuiDataGrid-cell{
+  outline: none !important;
+}
+
+.css-797iwu-MuiInputBase-root-MuiInput-root:before{
+  border-bottom: none !important;
+  outline: none !important;
+}
+
+.css-797iwu-MuiInputBase-root-MuiInput-root:after{
+  outline: none !important;
+  border-bottom: none !important;
+}
+
+.MuiInputBase-root .MuiInput-root .MuiInput-underline .MuiInputBase-colorPrimary .MuiInputBase-formControl .css-797iwu-MuiInputBase-root-MuiInput-root .css-797iwu-MuiInputBase-root-MuiInput-root{
+  font-weight: 800 !important;
 }

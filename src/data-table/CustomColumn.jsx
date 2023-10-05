@@ -9,10 +9,16 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import AttachFileOutlinedIcon from "@mui/icons-material/AttachFileOutlined";
 import ArrowDropDownCircleOutlinedIcon from "@mui/icons-material/ArrowDropDownCircleOutlined";
 import TitleOutlinedIcon from "@mui/icons-material/TitleOutlined";
+import ControlPointIcon from "@mui/icons-material/ControlPoint";
+import TextField from '@mui/material/TextField';
+
+
 
 const CustomColumn = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
+  const [popoverVisible, setPopoverVisible] = useState(false); 
+  const [fieldName, setFieldName] = useState('')
 
   const showModal = (option) => {
     setSelectedOption(option);
@@ -20,12 +26,15 @@ const CustomColumn = () => {
   };
 
   const handleOk = () => {
-    console.log("Selected Option:", selectedOption);
+    console.log("Selected Option:", fieldName);
     setIsModalVisible(false);
+    setSelectedOption('')
+
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    setSelectedOption('');
   };
 
   const content = (
@@ -57,28 +66,35 @@ const CustomColumn = () => {
     </div>
   );
 
+
   return (
     <Space wrap>
       <Popover
         content={content}
-        title={<span style={{ color: "#6271EB" }}>New Column</span>}
         trigger="click"
+        open={popoverVisible} 
+        onOpenChange={(visible) => setPopoverVisible(visible)} 
       >
-        <Button>Hello</Button>
+        <span>
+            <ControlPointIcon onClick={() => setPopoverVisible} />
+          </span>
       </Popover>
       <Modal
-        title={`Enter ${selectedOption} Field Name`}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        okText="Add Column"
-        okButtonProps={{ className: "custom-ok-button" }} 
-        cancelButtonProps={{ className: "custom-cancel-button" }}
-      >
-        <Input
-          placeholder={`${selectedOption} Field Name`}
-        />
-      </Modal>
+  title={
+    <span className="custom-title-font">ADD COLUMN</span>
+  }
+  open={isModalVisible}
+  onOk={handleOk}
+  onCancel={handleCancel}
+  okText="Add Column"
+  okButtonProps={{ className: "custom-ok-button" }}
+  cancelButtonProps={{ className: "custom-cancel-button" }}
+>
+  <p style={{paddingBottom:'10px'}} className="custom-title-font">{selectedOption} Field name </p>
+  <TextField size="small" id="outlined-basic" placeholder={`Enter name...`} variant="outlined" error value={fieldName} onChange={(e)=> setFieldName(e.target.value)} />
+
+</Modal>
+
     </Space>
   );
 };

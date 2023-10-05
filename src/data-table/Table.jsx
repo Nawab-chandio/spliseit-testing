@@ -13,16 +13,15 @@ import { useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import { grey } from "@mui/material/colors";
 import CustomColumn from "./CustomColumn";
-import Permission from "./Permission";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import "./styling.css";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import BusinessIcon from "@mui/icons-material/Business";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SearchIcon from "@mui/icons-material/Search";
 import EmailIcon from "@mui/icons-material/Email";
+import ReportTo from "./ReportTo";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 import {
   GridRowModes,
@@ -31,16 +30,8 @@ import {
   GridActionsCellItem,
 } from "@mui/x-data-grid";
 import { randomId, randomArrayItem } from "@mui/x-data-grid-generator";
-import {
-  Avatar,
-  Dialog,
-  Grid,
-  Input,
-  InputAdornment,
-  Radio,
-} from "@mui/material";
+import { Avatar, Dialog, Grid, InputAdornment } from "@mui/material";
 import { Popover, Space } from "antd";
-import Face6Icon from "@mui/icons-material/Face6";
 
 const role = ["Manager", "Clerk", "IT Officer"];
 const Dept = ["Finnance", "Administration", "IT Dept"];
@@ -124,168 +115,26 @@ const initialRows = [
   },
 ];
 
+// const CustomEditor = (params) => {
+
+//   // const handleOnChange= () =>{
+//   //   consi
+//   // }
+
+//   return <TextField
+//     id="outlined-basic"
+//     placeholder="Hahaha"
+//     variant="outlined"
+//     value={params.value}
+//     // onChange={handleOnChange}
+//   />
+// }
+
 export default function FullFeaturedCrudGrid() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState({});
   const [isAddingNewUser, setIsAddingNewUser] = React.useState(false);
   const [isCustomColumnOpen, setIsCustomColumnOpen] = useState(false);
-
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  // REPORT DATA
-
-  const names = [
-    {
-      name: "Ali",
-      pic: <Face6Icon />,
-      role: "manager",
-    },
-    {
-      name: "Haider",
-      pic: <Face6Icon />,
-      role: "Clerk",
-    },
-    {
-      name: "John",
-      pic: <Face6Icon />,
-      role: "Head",
-    },
-  ];
-
-  // const handleReportTo = () => {
-  //   if (selectedPerson !== null) {
-  //     console.log("Selected person:", selectedPerson);
-  //   } else {
-  //     console.log("Please select a person before saving.");
-  //   }
-  // };
-
-  const handleReportTo = () => {
-    if (selectedPerson !== null) {
-      setRows((oldRows) => {
-        return oldRows.map((row) => {
-          if (row.name === selectedPerson) {
-            // Update the "report" field with the selected name
-            return { ...row, report: selectedPerson };
-          }
-          return row;
-        });
-      });
-      console.log("Selected person:", selectedPerson);
-    } else {
-      console.log("Please select a person before saving.");
-    }
-  };
-
-  const handleRadioSelect = (selectedName) => {
-    setSelectedPerson(selectedName);
-  };
-  
-
-  const filteredNames = names.filter((person) =>
-    person.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const content = (
-    <div>
-      {/* Add a search input */}
-      <Grid
-        item
-        xs={12}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Input
-          placeholder="Search by name..."
-          fullWidth
-          size="medium"
-          startAdornment={
-            <InputAdornment position="start" >
-              <SearchIcon style={{paddingLeft:'10px'}}/>
-            </InputAdornment>
-          }
-          onChange={(e) => setSearchQuery(e.target.value)}
-          sx={{
-            marginBottom: "12px",
-            backgroundColor: "#F1F5F8",
-            borderRadius: "8px",
-            "& .MuiInput-input": {
-              fontSize: "16px",
-              height: "30px",
-              outline: "none",
-              boxShadow: "none",
-            },
-          }}
-        />
-      </Grid>
-      <Grid container>
-        {filteredNames.map((person, index) => (
-          <Grid
-            item
-            container
-            xs={12}
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingBottom: "10px",
-            }}
-          >
-            <Grid item xs={2}>
-              <Avatar>{person.pic}</Avatar>
-            </Grid>
-            <Grid item xs={4}>
-              <Grid item container><p className="nameStyle">{person.name}</p></Grid>
-              <Grid item container><p style={{color: "#21364166", fontWeight:300, fontSize:'9px', fontFamily:'Lexend'}}>{person.name}</p></Grid>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "flex-end",
-              }}
-            >
-              <Radio
-                checked={selectedPerson === person.name}
-                onChange={() => setSelectedPerson(person.name)}
-                value={person.name}
-              />
-            </Grid>
-          </Grid>
-        ))}
-      </Grid>
-      <Grid
-        item
-        container
-        style={{
-          display: "flex",
-          justifyContent: "end",
-          alignItems: "flex-end",
-        }}
-      >
-        <Button
-          onClick={handleReportTo}
-          style={{
-            backgroundColor: "#6271EB",
-            color: "white",
-            width: "98px",
-            height: "32px",
-            borderRadius: "6px",
-            border: "0",
-          }}
-        >
-          Save
-        </Button>
-      </Grid>
-    </div>
-  );
 
   const columns = [
     {
@@ -293,12 +142,6 @@ export default function FullFeaturedCrudGrid() {
       headerName: "Name",
       width: 160,
       editable: true,
-      valueGetter: (params) => {
-        if (!params.value) {
-          return "User name"; 
-        }
-        return params.value;
-      },
       renderCell: (params) => (
         <div
           style={{
@@ -315,14 +158,18 @@ export default function FullFeaturedCrudGrid() {
               width="100%"
               height="100%"
             />
-          </Avatar>{" "}
+          </Avatar>
           &nbsp;
-          {params.value}
+          <TextField
+            value={params.value}
+            placeholder="Enter name"
+            variant="standard"
+            InputProps={{ borderBottom: "none" }}
+          />
         </div>
       ),
     },
-    
-    
+
     {
       field: "Role",
       headerName: "Role",
@@ -338,6 +185,7 @@ export default function FullFeaturedCrudGrid() {
             popupIcon={null}
             onChange={(event, newValue) => {
               console.log("New role", newValue);
+              params.row.Role = newValue;
             }}
             listboxprops={{
               sx: { fontsize: 11 },
@@ -345,6 +193,7 @@ export default function FullFeaturedCrudGrid() {
             sx={{
               "& .muiautocomplete-input, & .muiinputlabel-root": {
                 fontsize: 11,
+                border: "none",
               },
             }}
             renderInput={(params) => (
@@ -354,6 +203,8 @@ export default function FullFeaturedCrudGrid() {
                 sx={{
                   fontFamily: "Lexend",
                   fontSize: 11,
+                  fontWeight: 400,
+                  borderBottom: "none",
                   "& input:focus": {
                     color: "#6271EB",
                     fontWeight: 500,
@@ -361,12 +212,13 @@ export default function FullFeaturedCrudGrid() {
                 }}
                 InputProps={{
                   ...params.InputProps,
+                  disableUnderline: true,
                   startAdornment: (
                     <InputAdornment position="start">
                       <ControlPointIcon />
                     </InputAdornment>
                   ),
-                  disableUnderline: true,
+                  // disableUnderline: true,
                 }}
                 placeholder=" Add New Role"
               />
@@ -374,16 +226,16 @@ export default function FullFeaturedCrudGrid() {
           />
         </Grid>
       ),
+      valueOptions: ["IT Officer", "Manager", "Boss"],
     },
 
     {
       field: "Permissions",
       headerName: "PERMISSIONS",
       type: "singleSelect",
-      width: 200,
+      width: 180,
       align: "left",
       headerAlign: "left",
-      // placeholder: 'add permission',
       renderCell: () => (
         <div
           style={{
@@ -394,18 +246,15 @@ export default function FullFeaturedCrudGrid() {
         >
           {Perms.map((permission, index) => (
             <span key={index} style={{ color: permission.color }}>
-              {/* <CircleIcon
-                style={{ width: "6px", height: "6px", paddingRight: "2px" }}
-              />{" "} */}
               {permission.name}
               {index !== Perms.length - 1 && (
                 <span style={{ margin: "0 5px", color: "gray" }}>|</span>
               )}
             </span>
           ))}
-          <span>
-            <ExpandMoreIcon onClick={handlePermission} />
-          </span>
+          {/* <Space wrap>
+            <CustomColumn />
+          </Space> */}
         </div>
       ),
     },
@@ -414,36 +263,23 @@ export default function FullFeaturedCrudGrid() {
       field: "Email",
       headerName: "Email",
       type: "email",
-      width: 150,
+      width: 180,
       editable: true,
       renderCell: (params) => (
-        <span className="customStyles">
-          {params.value ? (
-            params.value
-          ) : (
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <EmailIcon style={{ fontSize: 16 }} />
-              
-              <span style={{ marginRight: "4px" }}placeholder="Email Placeholder"></span>
-            </div>
-          )}
-        </span>
+        <TextField
+          value={params.value}
+          placeholder="Enter email"
+          variant="standard"
+          inputProps={{ borderBottom: "none" }}
+        />
       ),
     },
-    
-    
 
     {
       field: "report",
       headerName: "REPORT TO",
       width: 150,
       editable: true,
-      valueGetter: (param) =>{
-        if (!param.value){
-          return "Report to"
-        }
-        return param.value;
-      },
       renderCell: (params) => (
         <span
           className="customStyles"
@@ -454,26 +290,19 @@ export default function FullFeaturedCrudGrid() {
           }}
         >
           <Space wrap>
-            <Popover
-              style={{ border: "1px solid red" }}
-              content={content}
-              title={<span style={{ color: "#6271EB" }}>Add Report to</span>}
-              trigger="click"
-            >
-              <Avatar style={{ width: "25px", height: "25px" }}>
-                <img
-                  src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
-                  alt="Avatar"
-                  width="100%"
-                  height="100%"
-                />
-              </Avatar>
-            </Popover>
+            <ReportTo />
           </Space>
-          &nbsp;{params.value}
+          &nbsp;
+          <TextField
+            value={params.value}
+            placeholder="Report To"
+            variant="standard"
+            inputProps={{ borderBottom: "none" }}
+          />
         </span>
       ),
     },
+
     {
       field: "Dept",
       headerName: "Department",
@@ -489,6 +318,7 @@ export default function FullFeaturedCrudGrid() {
             popupIcon={null}
             onChange={(event, newValue) => {
               console.log("New Dept", newValue);
+              params.row.Dept = newValue;
             }}
             listboxprops={{
               sx: { fontsize: 11 },
@@ -540,8 +370,11 @@ export default function FullFeaturedCrudGrid() {
       align: "left",
       headerAlign: "left",
       headerName: (
-        <ControlPointIcon style={{ width: "15px", paddingTop: "25px" }} />
+        <Space wrap>
+          <CustomColumn />
+        </Space>
       ),
+
       width: 80,
       cellClassName: "actions",
       getActions: ({ id }) => {
@@ -581,10 +414,6 @@ export default function FullFeaturedCrudGrid() {
 
   const rowHeight = 35;
   const rowSpacingType = "border";
-
-  const handlePermission = () => {
-    setIsCustomColumnOpen(true);
-  };
 
   const handleClick = () => {
     const id = randomId();
@@ -781,18 +610,14 @@ export default function FullFeaturedCrudGrid() {
               </Grid>
             </Grid>
 
-            <Dialog open={isCustomColumnOpen}>
-              {/* <DialogContent> */}
-              {isCustomColumnOpen && <CustomColumn />}
-              {/* </DialogContent> */}
-            </Dialog>
-
             <Box paddingBottom={"15px"}>
               <DataGrid
                 rows={rows}
                 columns={columns}
                 style={styleRow}
                 getRowSpacing={getRowSpacing}
+                // autoHeight={true}
+                // disableVirtualization={true}
                 sx={{
                   [`& .${gridClasses.row}`]: {
                     bgcolor: (theme) =>
@@ -820,7 +645,7 @@ export default function FullFeaturedCrudGrid() {
                 rowSpacingType={rowSpacingType}
                 rowHeight={rowHeight}
                 rowModesModel={rowModesModel}
-                rowBuffer={true}
+                rowBuffer={5}
                 onRowModesModelChange={handleRowModesModelChange}
                 processRowUpdate={processRowUpdate}
                 slots={{
